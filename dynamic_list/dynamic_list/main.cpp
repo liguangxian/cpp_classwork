@@ -15,18 +15,18 @@ typedef struct _StructData
 	char firstName[10];
 	int balance;
 	Sex sex;
-}StructData;
+}Student;
 typedef struct _Node
 {
-	StructData data;
+	Student data;
 	struct _Node* next;
 
 } Node, *NodePtr;
 int num = 0;        //定义全局变量
 void instructions(void);
 void processList(NodePtr header);
-void Assignment(Node *pNode, StructData data);
-int list_insert_data(NodePtr *curNode);//int key 表示插入的位置，0代表从零位开始插入。
+void Assignment(Node *pNode, Student data);
+int insert_data(NodePtr *curNode);//int key 表示插入的位置，0代表从零位开始插入。
 int list_delete_data(NodePtr *ppNode, const char* data);
 void WriteFile(NodePtr header);
 NodePtr list_find_data(NodePtr *list, const char* name);
@@ -57,7 +57,7 @@ int update_data(NodePtr *ptr, const char* name)
 	}
 	return -1;
 }
-StructData AssignData(void);
+Student AssignData(void);
 int main()
 {
 	Node *header = (Node*)malloc(sizeof(Node));
@@ -77,7 +77,7 @@ int main()
 		case 1:
 			//fputs("input name,sex,lastName,firstName,balance,address(代表从第address位开始输入):\n", stdout);
 			//scanf("%s%d%s%s%d%d", name, &sex,&lastName,&firstName, &balance, &key);
-			list_insert_data(&header);
+			insert_data(&header);
 			processList(header);
 			break;
 		case 2:
@@ -120,7 +120,7 @@ int list_delete_data(NodePtr *ppNode, const char* name)
 	{
 		if ((*ppNode)->data.name[0] == 0)
 		{
-			printf("Seorry memory not have this number!\n");
+			printf("Sorry system not have this number!\n");
 			return -1;
 		}
 		else if (strcmp(pNode->data.name, name) == 0)
@@ -195,7 +195,7 @@ void WriteFile(NodePtr header)
 	}
 	printf("write file success!\n");
 }
-StructData AssignData(void)
+Student AssignData(void)
 {
 
 	Node *nptr = (Node*)malloc(sizeof(Node));
@@ -204,9 +204,9 @@ StructData AssignData(void)
 	scanf("%s%d%s%s%d", nptr->data.name, &nptr->data.sex, nptr->data.lastName, nptr->data.firstName, &nptr->data.balance);
 	return nptr->data;
 }
-int list_insert_data(NodePtr *curNode)
+int insert_data(NodePtr *curNode)
 {
-	StructData data = AssignData();
+	Student data = AssignData();
 	NodePtr peNode = *curNode;
 
 	NodePtr midNode = *curNode;
@@ -289,7 +289,7 @@ int list_insert_data(NodePtr *curNode)
 	}
 	return 0;
 }
-void Assignment(Node *pNode, StructData data)
+void Assignment(Node *pNode, Student data)
 {
 	strcpy(pNode->data.name, data.name);
 	pNode->data.sex = data.sex;

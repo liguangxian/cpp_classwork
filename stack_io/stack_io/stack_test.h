@@ -76,4 +76,4 @@ void instructions(void)
 		"   2 to remove an item from the queue\n"
 		"   3 show all elements in the queue\n"
 		"   4 to end\n");
-}
+}445r4r54r
