@@ -3,8 +3,6 @@
 #include <string.h>
 #include "header.h"
 
-#define USER_FILE_PATH "C:\\Users\\me\\Desktop\\user.bat"
-#define FILE_PATH "C:\\Users\\me\\Desktop\\acount1.txt"
 
 void welcome()
 {
@@ -760,7 +758,6 @@ void logn()
 {
 	welcome();
 	logn_page();
-	choice();
 	int i;
 	while ((i = choice) != 3)
 	{
@@ -834,6 +831,18 @@ void sign_in()
 			printf("please input your password!\n-->");
 			scanf("%s", pw);
 			int s = search_user_name(&ud, name, pw, c);
+			switch (s)
+			{
+			case 0:
+				printf("Account Number no sign up!\n");
+				break;
+			case 1:
+				printf("Sign in success!\n");
+				break;
+			case 2:
+				printf("PassWord input is Wrong!\n");
+				break;
+			}
 		}
 		break;
 		case 2:
@@ -850,6 +859,7 @@ void sign_in()
 				break;
 			case 1:
 				printf("Sign in success!\n");
+				admin_sign_in();
 				break;
 			case 2:
 				printf("PassWord input is Wrong!\n");

@@ -8,6 +8,9 @@ extern int num;
 #define STU 100
 #define SUB 3
 #define ARRAY_SIZE 20
+#define USER_FILE_PATH "C:\\Users\\me\\Desktop\\user.bat"
+#define FILE_PATH "C:\\Users\\me\\Desktop\\acount1.txt"
+
 typedef enum _Sex
 {
 	MALE = 0,
