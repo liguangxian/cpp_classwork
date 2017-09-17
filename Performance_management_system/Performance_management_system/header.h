@@ -8,8 +8,8 @@ extern int num;
 #define STU 100
 #define SUB 3
 #define ARRAY_SIZE 20
-#define USER_FILE_PATH "C:\\Users\\me\\Desktop\\user.bat"
-#define FILE_PATH "C:\\Users\\me\\Desktop\\acount1.txt"
+#define USER_FILE_PATH "C:\\Users\\me\\Desktop\\user.txt"
+#define FILE_PATH "C:\\Users\\me\\Desktop\\acount.txt"
 
 typedef enum _Sex
 {
@@ -34,10 +34,11 @@ typedef struct _Node
 } Node, *NodePtr;
 typedef struct _UserData
 {
-	char *name[ARRAY_SIZE];
-	char *pw[ARRAY_SIZE];
-	struct UserData *next;
+	char name[ARRAY_SIZE];
+	char pw[ARRAY_SIZE];
 	int flag;
+	struct _UserData *next;
+	
 }UserData,*UserDataPtr;
 
 
@@ -68,6 +69,7 @@ void sort_choice(Node *header);
 int delete_data(NodePtr *ppNode, const char* id);
 const char* deId();
 void format(NodePtr *ptr);
+void format_list(NodePtr *ptr);
 void reverse_order(NodePtr *ptr);
 void positive_order(NodePtr *ptr);
 void positive_order_chinese(NodePtr *ptr);
@@ -81,4 +83,12 @@ int write_list(NodePtr *ptr);
 void admin_sign_in();
 void signin_user_or_admin_page();
 void signup_user_or_admin_page();
+void priuserdata(UserDataPtr *ptr);
+
+//user
+void admin_update(UserDataPtr *ud,const char* id);
+void general_user(UserDataPtr *ud, char* name);
+void general_user_search(char* name);
+void general_user_update(UserDataPtr *ud,char* name);
+void general_user_page(); 
 #endif // !_HEADER_H_

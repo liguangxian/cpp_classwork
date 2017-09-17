@@ -144,9 +144,11 @@
   <ItemGroup>
     <ClCompile Include="function.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="userfuncation.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />
+    <ClInclude Include="userheader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
