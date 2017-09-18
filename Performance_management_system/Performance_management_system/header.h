@@ -48,10 +48,8 @@ void logn_page();
 void logn();
 void sign_up();
 void admin_sign_in();
-int insert_user(UserDataPtr *ptr, const char*name, const char*pw, int flag);
-int user_write_list(UserDataPtr *ptr);
-void write_user_memory(UserDataPtr *ptr);
-int search_user_name(UserDataPtr *list, char* name, char* pw, int flag);
+void admin_sign_in();
+
 void welcome();
 void navigation();
 int choice();
@@ -80,15 +78,13 @@ void priData(NodePtr *list, const char* id);
 void read_file();
 int file_size(char* filename);
 int write_list(NodePtr *ptr);
-void admin_sign_in();
-void signin_user_or_admin_page();
-void signup_user_or_admin_page();
-void priuserdata(UserDataPtr *ptr);
+
+
 
 //user
-void admin_update(UserDataPtr *ud,const char* id);
-void general_user(UserDataPtr *ud, char* name);
-void general_user_search(char* name);
-void general_user_update(UserDataPtr *ud,char* name);
-void general_user_page(); 
+
+
+
+void min_data(NodePtr *ptr);
+void max_data(NodePtr *ptr);
 #endif // !_HEADER_H_

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
+#include "userheader.h"
 void welcome()
 {
 	printf("\t\t\t********WELCOME PERFORMANCE MANAGEMENT SYSTEM*****\n\n");
@@ -457,6 +458,95 @@ void positive_order(NodePtr *ptr)
 		//*ptr->next = aptr[0]->next;
 	}
 }
+void max_data(NodePtr *ptr)
+{
+	int mid[ARRAY_SIZE];
+	NodePtr nptr = *ptr;
+	NodePtr mptr = *ptr;
+	int a = 0;
+	if (nptr->data.name[0] == 0)
+	{
+		printf("NO data!\n");
+		return;
+	}
+	while (mptr != NULL)
+	{
+		mptr = mptr->next;
+		a++;
+	}
+	
+	for (int i = 0; i < a; i++)
+	{
+		mid[i] = nptr->data.sum;
+		nptr = nptr->next;
+	}
+	mptr = *ptr;
+	for (int i = 0; i < a-1; i++)
+	{
+		if (mid[i] < mid[i + 1])
+		{
+			mptr = mptr->next;
+			continue;
+		}
+		mid[i + 1] = mid[i];
+	}
+	NodePtr PriNode = mptr;
+	printf("Row\tID\tName\tsex\tChinese\tMath\tEnglish\tSum\tAverage\n");
+	printf("---------------------------------------------------------------------------------------\n");
+
+	printf("\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%.2lf\n", PriNode->data.id, PriNode->data.id, PriNode->data.sex == MALE ? "Man" : "Women", PriNode->data.score[0], PriNode->data.score[1], PriNode->data.score[2], PriNode->data.sum, PriNode->data.average);
+
+
+	printf("----------------------------------------------------------------------------------------\n");
+	fputs("\n", stdout);
+
+}
+void min_data(NodePtr *ptr)
+{
+	int mid[ARRAY_SIZE];
+	NodePtr nptr = *ptr;
+	NodePtr mptr = *ptr;
+	int a = 0;
+	while (mptr != NULL)
+	{
+		mptr = mptr->next;
+		a++;
+	}
+	if (nptr->data.name[0] == 0)
+	{
+		printf("NO data!\n");
+		return;
+	}
+	if (a == 0)
+	{
+		printf("No data!\n");
+	}
+	for (int i = 0; i < a; i++)
+	{
+		mid[i] = nptr->data.sum;
+		nptr = nptr->next;
+	}
+	mptr = *ptr;
+	for (int i = 0; i < a-1; i++)
+	{
+		if (mid[i] > mid[i + 1])
+		{
+			mptr = mptr->next;
+			continue;
+		}
+		mid[i+1] = mid[i];
+	}
+	NodePtr PriNode = mptr;
+	printf("Row\tID\tName\tsex\tChinese\tMath\tEnglish\tSum\tAverage\n");
+	printf("---------------------------------------------------------------------------------------\n");
+
+	printf("\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%.2lf\n", PriNode->data.id, PriNode->data.id, PriNode->data.sex == MALE ? "Man" : "Women", PriNode->data.score[0], PriNode->data.score[1], PriNode->data.score[2], PriNode->data.sum, PriNode->data.average);
+
+
+	printf("----------------------------------------------------------------------------------------\n");
+	fputs("\n", stdout);
+
+}
 void reverse_order(NodePtr *ptr)
 {
 	NodePtr nptr = *ptr;
@@ -669,7 +759,9 @@ void sort_page()
 		"\t\t\t*               5  按英语成绩排序                 *\n"
 		"\t\t\t*               6  写入数据库                     *\n"
 		"\t\t\t*               7  导出到指定文件                 *\n"
-		"\t\t\t*               8  返回上一页面                   *\n"
+		"\t\t\t*               8  查找最大值                    *\n"
+		"\t\t\t*               9  查找最小值                    *\n"
+		"\t\t\t*               10  返回上一页面                   *\n"
 		"\t\t\t*                                                *\n"
 		"\t\t\t****** Capyright @ 2017-9-12 liguangxian *********\n");
 }
@@ -677,7 +769,7 @@ void sort_choice(Node *header)
 {
 	processList(header);
 	int i;
-	while ((i =choice()) != 8)
+	while ((i =choice()) != 10)
 	{
 		switch (i)
 		{
@@ -714,12 +806,196 @@ void sort_choice(Node *header)
 			sort_page();
 			processList(header);
 			break;
+		case 8:
+			max_data(&header);
+			break;
+		case 9:
+			min_data(&header);
+			break;
 		default:
 			printf("Invalid input!\n");
 			break;
 		}
 	}
 }
+
+void logn()
+{
+	welcome();
+	logn_page();
+	int i;
+	while ((i = choice()) != 3)
+	{
+		switch (i)
+		{
+		case 1:
+			sign_in();
+			break;
+		case 2:
+			sign_up();
+			break;
+		default:
+			printf("Invalid input!\n");
+			break;
+		}
+	}
+
+}
+void logn_page()
+{
+	printf("\t\t\t************* MANAGEMENT SYSTEM *******************\n"
+		"\t\t\t*                                                 *\n"
+		"\t\t\t*               1  登录                           *\n"
+		"\t\t\t*               2  注册                           *\n"
+		"\t\t\t*               3  退出程序                       *\n"
+		"\t\t\t*                                                 *\n"
+		"\t\t\t****** Capyright @ 2017-9-12 liguangxian **********\n");
+}
+
+void sign_in()
+{
+	char name[ARRAY_SIZE];
+	char pw[ARRAY_SIZE];
+	memset(name, 0, sizeof(name));
+	memset(pw, 0, sizeof(pw));
+	signin_user_or_admin_page();
+
+	UserData *ud = (UserData*)malloc(sizeof(UserData));
+	memset(ud, 0, sizeof(UserData));
+	printf("sign in administrator or general user?\n-->");
+	user_write_list(&ud);
+	priuserdata(&ud);
+
+	int c;
+	while ((c = choice()) != 3)
+	{
+		switch (c)
+		{
+		case 1:
+		{
+			printf("please input sign in Admin name:");
+			scanf("%s", name);
+			printf("please input your password!\n-->");
+			scanf("%s", pw);
+			int s = search_user_name(&ud, name, pw, c);
+			switch (s)
+			{
+			case 0:
+				printf("Account Number no sign up!\n");
+				break;
+			case 1:
+				system("cls");
+				printf("Sign in success!\n");
+				admin_sign_in();
+				break;
+			case 2:
+				printf("PassWord input is Wrong!\n");
+				break;
+			default:
+				printf("\t\terror!\n");
+				break;
+			}
+			system("cls");
+			signin_user_or_admin_page();
+		}
+		break;
+		case 2:
+		{
+			printf("please input sign in user name:");
+			scanf("%s", name);
+			printf("please input your password!\n-->");
+			scanf("%s", pw);
+			int s = search_user_name(&ud, name, pw, c);
+			switch (s)
+			{
+			case 0:
+				printf("Account Number no sign up!\n");
+				break;
+			case 1:
+				printf("Sign in success!\n");
+
+				//UserData *ud = (UserData*)malloc(sizeof(UserData));
+				//memset(ud, 0, sizeof(UserData));
+				//user_write_list(&ud);
+				general_user(&ud,name);
+				break;
+			case 2:
+				printf("PassWord input is Wrong!\n");
+				break;
+			}
+			system("cls");
+			signin_user_or_admin_page();
+		}
+		break;
+		default:
+			printf("Invalid input!\n");
+			signin_user_or_admin_page();
+			break;
+		}
+	}
+	/*printf("Please input your Account Number:-->");
+	scanf("%s", name);*/
+	logn_page();
+
+}
+void sign_up()
+{
+	signup_user_or_admin_page();
+	char name[ARRAY_SIZE];
+	char pw[ARRAY_SIZE];
+	memset(name, 0, sizeof(name));
+	memset(pw, 0, sizeof(pw));
+
+	UserData * ud = (UserData*)malloc(sizeof(UserData));
+	memset(ud, 0, sizeof(UserData));
+	printf("sign up administrator or general user?\n-->");
+	user_write_list(&ud);
+	priuserdata(&ud);
+
+	int c;
+	while ((c = choice()) != 3)
+	{
+		switch (c)
+		{
+		case 1:
+		{
+			printf("please input sign up Admin name:");
+			scanf("%s", name);
+			printf("please input your password!\n-->");
+			scanf("%s", pw);
+			int u = insert_user(&ud, name, pw, c);
+			if (u == 1)
+			{
+				write_user_memory(&ud);
+			}
+			priuserdata(&ud);
+			signup_user_or_admin_page();
+		}
+		break;
+		case 2:
+		{
+			printf("please input sign up User name:");
+			scanf("%s", name);
+			printf("please input your password!\n-->");
+			scanf("%s", pw);
+			int u = insert_user(&ud, name, pw, c);
+			if (u == 1)
+			{
+				write_user_memory(&ud);
+			}
+			priuserdata(&ud);
+			signup_user_or_admin_page();
+		}
+		break;
+		default:
+			printf("Invalid input\n");
+			priuserdata(&ud);
+			break;
+		}
+	}
+	logn_page();
+}
+
 void admin_sign_in()
 {
 	Node *header = (Node*)malloc(sizeof(Node));
@@ -797,6 +1073,10 @@ void admin_sign_in()
 			sort_page();
 			sort_choice(header);
 			navigation();
+			if (write_list(&header) != 0)
+			{
+				processList(header);
+			}
 			break;
 		case 10:
 			system("cls");
@@ -829,7 +1109,7 @@ void admin_sign_in()
 			fputs("input update ID:\n", stdout);
 			memset(id, 0, sizeof(id));
 			scanf("%s", id);
-			admin_update(&ud,id);
+			admin_update(&ud, id);
 		}
 
 		default:
@@ -839,353 +1119,7 @@ void admin_sign_in()
 	}
 	logn();
 }
-void logn()
-{
-	welcome();
-	logn_page();
-	int i;
-	while ((i = choice()) != 3)
-	{
-		switch (i)
-		{
-		case 1:
-			sign_in();
-			break;
-		case 2:
-			sign_up();
-			break;
-		default:
-			printf("Invalid input!\n");
-			break;
-		}
-	}
 
-}
-void logn_page()
-{
-	printf("\t\t\t************* MANAGEMENT SYSTEM *******************\n"
-		"\t\t\t*                                                 *\n"
-		"\t\t\t*               1  登录                           *\n"
-		"\t\t\t*               2  注册                           *\n"
-		"\t\t\t*               3  退出程序                       *\n"
-		"\t\t\t*                                                 *\n"
-		"\t\t\t****** Capyright @ 2017-9-12 liguangxian **********\n");
-}
-void signup_user_or_admin_page()
-{
-	printf("\t\t\t************* MANAGEMENT SYSTEM ******************\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t*               1  管理员用户注册                 *\n"
-		"\t\t\t*               2  普通用户注册                   *\n"
-		"\t\t\t*               3  返回上一层                     *\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t****** Capyright @ 2017-9-12 liguangxian *********\n");
-}
-void signin_user_or_admin_page()
-{
-	printf("\t\t\t************* MANAGEMENT SYSTEM ******************\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t*               1  管理员用户登录                 *\n"
-		"\t\t\t*               2  普通用户登录                   *\n"
-		"\t\t\t*               3  返回上一层                     *\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t****** Capyright @ 2017-9-12 liguangxian *********\n");
-}
-void sign_in()
-{
-	char name[ARRAY_SIZE];
-	char pw[ARRAY_SIZE];
-	memset(name, 0, sizeof(name));
-	memset(pw, 0, sizeof(pw));
-	signin_user_or_admin_page();
-
-	UserData *ud = (UserData*)malloc(sizeof(UserData));
-	memset(ud, 0, sizeof(UserData));
-	printf("sign in administrator or general user?\n-->");
-	user_write_list(&ud);
-	priuserdata(&ud);
-
-	int c;
-	while ((c = choice()) != 3)
-	{
-		switch (c)
-		{
-		case 1:
-		{
-			printf("please input sign in Admin name:");
-			scanf("%s", name);
-			printf("please input your password!\n-->");
-			scanf("%s", pw);
-			int s = search_user_name(&ud, name, pw, c);
-			switch (s)
-			{
-			case 0:
-				printf("Account Number no sign up!\n");
-				break;
-			case 1:
-				system("cls");
-				printf("Sign in success!\n");
-				admin_sign_in();
-				break;
-			case 2:
-				printf("PassWord input is Wrong!\n");
-				break;
-			}
-			system("cls");
-			signin_user_or_admin_page();
-		}
-		break;
-		case 2:
-		{
-			printf("please input sign in user name:");
-			scanf("%s", name);
-			printf("please input your password!\n-->");
-			scanf("%s", pw);
-			int s = search_user_name(&ud, name, pw, c);
-			switch (s)
-			{
-			case 0:
-				printf("Account Number no sign up!\n");
-				break;
-			case 1:
-				printf("Sign in success!\n");
-
-				//UserData *ud = (UserData*)malloc(sizeof(UserData));
-				//memset(ud, 0, sizeof(UserData));
-				//user_write_list(&ud);
-				general_user(&ud,name);
-				break;
-			case 2:
-				printf("PassWord input is Wrong!\n");
-				break;
-			}
-			system("cls");
-			signin_user_or_admin_page();
-		}
-		break;
-		default:
-			printf("Invalid input!\n");
-			signin_user_or_admin_page();
-			break;
-		}
-	}
-	/*printf("Please input your Account Number:-->");
-	scanf("%s", name);*/
-	logn();
-
-}
-void sign_up()
-{
-	signup_user_or_admin_page();
-	char name[ARRAY_SIZE];
-	char pw[ARRAY_SIZE];
-	memset(name, 0, sizeof(name));
-	memset(pw, 0, sizeof(pw));
-
-	UserData * ud = (UserData*)malloc(sizeof(UserData));
-	memset(ud, 0, sizeof(UserData));
-	printf("sign up administrator or general user?\n-->");
-	user_write_list(&ud);
-	priuserdata(&ud);
-
-	int c;
-	while ((c = choice()) != 3)
-	{
-		switch (c)
-		{
-		case 1:
-		{
-			printf("please input sign up Admin name:");
-			scanf("%s", name);
-			printf("please input your password!\n-->");
-			scanf("%s", pw);
-			int u = insert_user(&ud, name, pw, c);
-			if (u == 1)
-			{
-				write_user_memory(&ud);
-			}
-			priuserdata(&ud);
-			signup_user_or_admin_page();
-		}
-		break;
-		case 2:
-		{
-			printf("please input sign up User name:");
-			scanf("%s", name);
-			printf("please input your password!\n-->");
-			scanf("%s", pw);
-			int u = insert_user(&ud, name, pw, c);
-			if (u == 1)
-			{
-				write_user_memory(&ud);
-			}
-			priuserdata(&ud);
-			signup_user_or_admin_page();
-		}
-		break;
-		default:
-			printf("Invalid input\n");
-			priuserdata(&ud);
-			break;
-		}
-	}
-	logn();
-}
-int insert_user(UserDataPtr *ptr,const char*name, const char*pw, int flag)
-{
-	UserDataPtr firNode = *ptr;
-	UserDataPtr secNode = *ptr;
-	UserDataPtr triNode = *ptr;
-	UserDataPtr midNode = *ptr;
-
-	//printf("Please input ")
-	if (secNode->next != 0 || secNode->name[0] != 0)
-	{
-		do
-		{
-			//if (*(secNode->data.id) == *data.id)      *data.id==0;  *(secNode->data.id)==0 equal secNode->data.id[0] equal data.id[0]
-			if (strcmp(secNode->name, name) == 0 &&secNode->flag == flag)//peNode->name ==data is error
-			{
-				printf("\n***************** Account Number Is Exist! ****************\n\n");
-				return -1;
-			}
-
-			midNode = secNode;
-			secNode = secNode->next;
-		} while (midNode->next != 0);
-	}
-	if (firNode->name[0] == 0)
-	{
-		strcpy(firNode->name, name);
-		strcpy(firNode->pw, pw);
-		firNode->flag = flag;
-		printf("sign up Account number is Accesss!\n");
-		return 1;
-	}
-	else
-	{
-		while (firNode->next != NULL)
-		{
-			firNode = firNode->next;
-
-		}
-		UserData* pNewNode = (UserData*)malloc(sizeof(UserData));
-		memset(pNewNode, 0, sizeof(UserData));
-		firNode->next = pNewNode;
-		strcpy(pNewNode->name, name);
-		strcpy(pNewNode->pw, pw);
-		pNewNode->flag = flag;
-		printf("sign up Account number is Accesss!\n");
-		//Assignment(pNewNode, data);
-		return 1;
-	}
-}
-int user_write_list(UserDataPtr *ptr)
-{
-	FILE *writePtr = 0;
-	UserDataPtr firNode = *ptr;
-	UserDataPtr secNode = *ptr;
-	//Student *data = (Student*)malloc(sizeof(Student));
-	//memset(data, 0, sizeof(Student));
-	if ((writePtr = fopen(USER_FILE_PATH, "r")) == NULL)
-	{
-		printf("File could not be opened.\n");
-		return 0;
-	}
-
-	//Student data = write_data(writePtr);
-	int size = file_size(USER_FILE_PATH);
-	if (size == 0)
-	{
-		printf("The User.bat is null!\n");
-		return 0;
-	}
-	int len = (int)size / sizeof(UserData);
-	//for (int i = 1; i < len; i++)
-	//{
-	//	//*ptr->next = pNewNode;
-	//	UserData* pNewNode = (UserData*)malloc(sizeof(UserData));
-	//	memset(pNewNode, 0, sizeof(UserData));
-	//	firNode->next = pNewNode;
-	//	firNode = firNode->next;
-
-	//}
-	for (int i = 1; i <= len; i++)
-	{
-		UserData* pNewNode = (UserData*)malloc(sizeof(UserData));
-		memset(pNewNode, 0, sizeof(UserData));
-		fread(pNewNode, sizeof(UserData), 1, writePtr);
-		if (i == 1)
-		{
-			//user_assignment(secNode);
-			 strcpy(secNode->name,pNewNode->name);
-			 strcpy(secNode->pw, pNewNode->pw);
-			 secNode->flag = pNewNode->flag;
-			//free(pNewNode);
-			continue;
-		}
-		//while (firNode->next != NULL)
-		//{
-		//	secNode = secNode->next;
-
-		//}
-
-		//Node* pNewNode = (Node*)malloc(sizeof(Node));
-		//memset(pNewNode, 0, sizeof(Node));
-		secNode->next = pNewNode;
-		//user_assignment(secNode);
-		secNode = secNode->next;
-	}
-	return 1;
-}
-void write_user_memory(UserDataPtr *ptr)
-{
-	FILE *wPtr = 0;
-	UserDataPtr uptr = *ptr;
-	if ((wPtr = fopen(USER_FILE_PATH, "w+")) == NULL)
-	{
-		printf("Open file is fail!\n");
-		exit(0);
-	}
-	if (uptr != NULL)
-	{
-		do
-		{
-			fwrite(uptr, sizeof(struct _UserData), 1, wPtr);
-			uptr = uptr->next;
-		} while (uptr!= NULL);
-	}
-	//fclose(uptr);
-	fclose(wPtr);
-	printf("Write data to file success!\n");
-}
-int search_user_name(UserDataPtr *list, char* name, char* pw, int flag)
-{
-	UserDataPtr curNode = *list;
-	if (curNode->name[0] == 0)
-	{
-
-		return 0;
-	}
-	while (curNode != 0)
-	{
-		if (strcmp(curNode->name, name) == 0 && curNode->flag == flag)
-		{
-			//priData(&curNode, id);
-			if (strcmp(curNode->pw,pw) == 0)
-			{
-				return 1;
-			}
-			else
-			{
-				return 2;
-			}
-
-		}
-		curNode = curNode->next;
-	}
-	return 0;
-}
 void read_file()
 {
 	FILE *writePtr = 0;
@@ -1304,152 +1238,5 @@ void format_list(NodePtr *ptr)
 	memset(header, 0, sizeof(Node));
 	*ptr = header;
 }
-void priuserdata(UserDataPtr *ptr)
-{
-		UserDataPtr PriNode = *ptr;
-	printf("Row\tName\tpw\tflag\n");
-	printf("-----------------------------------------------------------------------\n");
-	int i = 1;
-	while (PriNode)
-	{
-		if (PriNode->name[0] == 0)
-		{
-			printf("----------------------------------------------------------------------\n");
-			return;
-		}
-		printf("%d:\t%s\t%s\t%d\n", i,PriNode->name, PriNode->pw,PriNode->flag);
 
-		PriNode = PriNode->next;
-		i++;
-	}
-	
-	printf("----------------------------------------------------------------------\n");
-	fputs("\n", stdout);
-}
 //user  
-void admin_update(UserDataPtr *ud,const char* id)
-{
-	
-	printf("sign in administrator or general user?\n-->");
-	UserDataPtr ptr = *ud;
-	UserDataPtr uptr = *ud;
-	
-	
-
-
-
-	while( ptr!= NULL)
-	{
-		if (strcmp(ptr->name, id) == 0)
-		{
-			printf("Update data:Name,PW,flag:-->\n");
-			char name[ARRAY_SIZE];
-			char pw[ARRAY_SIZE];
-			int flag;
-			scanf("%s%s%d", name, pw, &flag);
-			strcpy(ptr->name, name);
-			strcpy(ptr->pw, pw);
-			ptr->flag = flag;
-			printf("Update seccess!\n");
-			write_user_memory(ud);
-			priuserdata(ud);
-			return 1;
-		}
-		//priuserdata(&ud);
-		
-		ptr = ptr->next;
-	}
-	
-
-
-	/*if (i == num + 1)
-	{
-		printf("No Find this name data!\n");
-		return -1;
-	}    */
-}
-
-void general_user(UserDataPtr *ud,char* name)
-{
-	general_user_page();
-	int i;
-	while ((i = choice()) != 3)
-	{
-		switch (i)
-		{
-		case 1:
-			general_user_search(name);
-			break;
-		case 2:
-			general_user_update(ud,name);
-			break;
-		default:
-			printf("Invaled input!\n");
-			break;
-		}
-	}
-
-}
-void general_user_page()
-{
-	printf("\t\t\t************* MANAGEMENT SYSTEM ******************\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t*               1  成绩查询                       *\n"
-		"\t\t\t*               2  修改信息                       *\n"
-		"\t\t\t*               3  返回上一层                     *\n"
-		"\t\t\t*                                                *\n"
-		"\t\t\t****** Capyright @ 2017-9-12 liguangxian *********\n");
-}
-void general_user_search(char* name)
-{
-	Node *header = (Node*)malloc(sizeof(Node));
-	memset(header, 0, sizeof(Node));
-	write_list(&header);
-	/*char id[ARRAY_SIZE];
-	fputs("input search id:\n", stdout);
-	memset(id, 0, sizeof(id));
-	scanf("%s", id);*/
-	NodePtr curNode = header;
-	if (curNode->data.name[0] == 0)
-	{
-		printf("System no data!\n");
-	}
-	while (curNode != 0)
-	{
-		if (strcmp(curNode->data.id, name) == 0)
-		{
-			priData(&curNode, name);
-			return curNode;
-		}
-		curNode = curNode->next;
-	}
-	printf("No search id!\n");
-}
- void general_user_update(UserDataPtr *ud, char* name)
-{
-
-	UserDataPtr ptr = *ud;
-	UserDataPtr uptr = *ud;
-
-	while (ptr != NULL)
-	{
-		if (strcmp(ptr->name, name) == 0)
-		{
-			printf("Update data:Name,PW:-->\n");
-			char name[ARRAY_SIZE];
-			char pw[ARRAY_SIZE];
-			int flag;
-			scanf("%s%s", name, pw);
-			strcpy(ptr->name, name);
-			strcpy(ptr->pw, pw);
-			//ptr->flag = flag;
-			printf("Update seccess!\n");
-			write_user_memory(ud);
-			priuserdata(ud);
-			return 1;
-		}
-		//priuserdata(&ud);
-
-		ptr = ptr->next;
-	}
-}
