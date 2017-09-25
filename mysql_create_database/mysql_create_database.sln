@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mysql_create_database", "mysql_create_database\mysql_create_database.vcxproj", "{2E6C28CB-9259-488E-8888-972931BA9A6C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "student_score_system", "student_score_system\student_score_system.vcxproj", "{B9C6FA9A-9227-442B-B215-286EF76E5CBB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "update_program", "update_program.c\update_program.c.vcxproj", "{3452337E-8058-4471-852B-7BD0AB1F2992}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Debug|x64.ActiveCfg = Debug|x64
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Debug|x64.Build.0 = Debug|x64
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Debug|x86.ActiveCfg = Debug|Win32
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Debug|x86.Build.0 = Debug|Win32
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Release|x64.ActiveCfg = Release|x64
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Release|x64.Build.0 = Release|x64
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Release|x86.ActiveCfg = Release|Win32
+		{2E6C28CB-9259-488E-8888-972931BA9A6C}.Release|x86.Build.0 = Release|Win32
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Debug|x64.ActiveCfg = Debug|x64
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Debug|x64.Build.0 = Debug|x64
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Debug|x86.ActiveCfg = Debug|Win32
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Debug|x86.Build.0 = Debug|Win32
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Release|x64.ActiveCfg = Release|x64
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Release|x64.Build.0 = Release|x64
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Release|x86.ActiveCfg = Release|Win32
+		{B9C6FA9A-9227-442B-B215-286EF76E5CBB}.Release|x86.Build.0 = Release|Win32
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Debug|x64.ActiveCfg = Debug|x64
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Debug|x64.Build.0 = Debug|x64
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Debug|x86.ActiveCfg = Debug|Win32
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Debug|x86.Build.0 = Debug|Win32
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Release|x64.ActiveCfg = Release|x64
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Release|x64.Build.0 = Release|x64
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Release|x86.ActiveCfg = Release|Win32
+		{3452337E-8058-4471-852B-7BD0AB1F2992}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
